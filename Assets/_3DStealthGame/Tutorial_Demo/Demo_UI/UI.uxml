@@ -1,0 +1,3 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Label text="Press the spacebar to skip" style="-unity-text-align: lower-center; -unity-font-definition: url(&quot;project://database/Assets/_3DStealthGame/Art/Fonts/Underdog-Regular.ttf?fileID=12800000&amp;guid=631c4d05de2994134bae4af150a31b9f&amp;type=3#Underdog-Regular&quot;); bottom: auto; position: relative; align-content: flex-end; transform-origin: bottom; top: 402px; left: -1px; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 16px;"/>
+</ui:UXML>
