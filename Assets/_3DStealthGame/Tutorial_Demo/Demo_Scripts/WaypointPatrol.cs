@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering.PostProcessing;
 
 namespace StealthGame
 {
@@ -20,6 +21,9 @@ namespace StealthGame
         public Transform PlayerTransform;
         public bool PlayerVisible;
         //public UnityEvent onTriggerEnterEvent;
+
+        //public PostProcessVolume volume;
+        //public Vignette vignette;
 
         void Start ()
         {
