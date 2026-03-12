@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Main Camera Custom Blends
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineBlenderSettings
   CustomBlends:
-  - From: RedKeyCam (2)
+  - From: BathKeyCam (1)
     To: PlayerCam
     Blend:
       Style: 1

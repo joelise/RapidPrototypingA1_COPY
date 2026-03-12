@@ -92,5 +92,7 @@ namespace StealthGame
         {
             PlayerVisible = false;
         }
+
+        
     }
 }

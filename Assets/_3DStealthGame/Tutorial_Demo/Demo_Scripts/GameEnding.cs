@@ -21,7 +21,7 @@ namespace StealthGame
         public AudioSource caughtAudio;
 
         bool m_IsPlayerAtExit;
-        bool m_IsPlayerCaught;
+        public bool m_IsPlayerCaught;
         float m_Timer;
         bool m_HasAudioPlayed;
 
@@ -48,8 +48,8 @@ namespace StealthGame
 
         public bool SkipPressed;
         public bool CamSeq;
-        //public GameObject SkipUI;
-        public GameObject Fade;
+        //public GameObject BlackUI;
+        //public GameObject Fade;
         public Image FadeUI;
         public bool LevelReset;
         private Label m_Skip;
@@ -61,8 +61,13 @@ namespace StealthGame
 
         private Label timeTaken;
 
+        public VignetteEffect vignette;
+        public bool AllReset;
+
         void Start()
         {
+            AllReset = false;
+            //BlackUI.SetActive(false);
             KeyCollected = addedUI.rootVisualElement.Q<Label>("KeyCollected");
             KeysTotal = addedUI.rootVisualElement.Q<Label>("AllKeys");
             Middle = addedUI.rootVisualElement.Q<Label>("middle");
@@ -71,7 +76,7 @@ namespace StealthGame
             timeTaken = uiDocument.rootVisualElement.Q<Label>("TimeTaken");
 
             HideKeyUI();
-            Fade.SetActive(false);
+            //Fade.SetActive(false);
             PlayerStart = player.transform;
             playerMovement.DisableMovement();
             //player.GetComponent<PlayerMovement>().enabled = false;
@@ -167,14 +172,23 @@ namespace StealthGame
                 }
                 
             }
-            else if (m_IsPlayerCaught)
+            if (m_IsPlayerCaught)
             {
                 // ResetLevel();
                 //PlayerCaught(m_CaughtScreen, caughtAudio);
                 // m_IsPlayerCaught = false;
                 //player.GetComponent<PlayerMovement>().enabled = false;
-                StartCoroutine(FadeRoutine());
+                StartCoroutine(FadeInRoutine());
+                StartCoroutine(FadeOut());
+                //BlackUI.SetActive(false);
+                //playerMovement.EnableMovement();
+                m_IsPlayerCaught = false;
+            }
+
+            if (AllReset)
+            {
                 playerMovement.EnableMovement();
+                AllReset = false;
             }
 
             CheckPressed();
@@ -310,7 +324,7 @@ namespace StealthGame
         {
             Color fade = FadeUI.color;
             fade.a = 0f;
-            Fade.SetActive(true);
+            //Fade.SetActive(true);
             float fadeTimer = 0f;
             float fadeTime = 2f;
             if (!m_HasAudioPlayed)
@@ -344,12 +358,13 @@ namespace StealthGame
             }
         }
 
-        public IEnumerator FadeRoutine()
+        public IEnumerator FadeInRoutine()
         {
+            
             playerMovement.DisableMovement();
             Color c = FadeUI.color;
             c.a = 0f;
-            Fade.SetActive(true);
+            //Fade.SetActive(true);
             float t = 0f;
             float fadeT = 2f;
             //float delay = 2f;
@@ -369,11 +384,16 @@ namespace StealthGame
 
             m_CaughtScreen.style.opacity = 0;
             t = 0f;
-
+            
             ResetLevel();
             
-            m_IsPlayerCaught = false;
-            
+            //m_IsPlayerCaught = false;
+            //vignette.globalVolume.
+            //yield return new WaitForSeconds(3f);
+            //BlackUI.SetActive(true);
+            yield return null;
+            /*
+
             while (t < fadeT)
             {
                 t += Time.deltaTime;
@@ -383,7 +403,28 @@ namespace StealthGame
                 yield return null;
             }
 
-            playerMovement.EnableMovement();
+            playerMovement.EnableMovement();*/
+        }
+
+        public IEnumerator FadeOut()
+        {
+            float t = 0f;
+            float fadeT = 2f;
+
+            Color c = FadeUI.color;
+            //c.a = 0f;
+            while (t < fadeT)
+            {
+                t += Time.deltaTime;
+                c.a = Mathf.Lerp(1, 0, t / fadeT);
+                FadeUI.color = c;
+
+                
+            }
+            //BlackUI.SetActive(false);
+            yield return null;
+
+            AllReset = true;
         }
 
     }
