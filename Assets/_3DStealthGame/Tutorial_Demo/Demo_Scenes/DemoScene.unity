@@ -3103,8 +3103,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805581756}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.51981366, y: 0.000000010285496, z: -0.000000006258537, w: 0.8542797}
-  m_LocalPosition: {x: -9.39, y: 3.7, z: -7.3}
+  m_LocalRotation: {x: 0.0012622278, y: 0.9761297, z: -0.21711068, w: 0.0056749764}
+  m_LocalPosition: {x: -9.43, y: 1.61, z: -4.38}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3163,7 +3163,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &840455984
 Transform:
   m_ObjectHideFlags: 0
@@ -10820,7 +10820,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1721364980}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca7de3aefa901374ba29464584a3109a, type: 3}
   m_Name: 
@@ -12852,6 +12852,11 @@ PrefabInstance:
       objectReference: {fileID: 5642716984738007026}
     - target: {fileID: 142462114116109389, guid: e58a8494f35e17f45ba5bbffdfb92517,
         type: 3}
+      propertyPath: m_Animator
+      value: 
+      objectReference: {fileID: 6077229646317852087}
+    - target: {fileID: 142462114116109389, guid: e58a8494f35e17f45ba5bbffdfb92517,
+        type: 3}
       propertyPath: camTransform
       value: 
       objectReference: {fileID: 1732033742}
@@ -14599,6 +14604,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56b2cfb9174a093419d0f8db96a60eda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &6077229646317852087 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2701863865896896819, guid: e58a8494f35e17f45ba5bbffdfb92517,
+    type: 3}
+  m_PrefabInstance: {fileID: 4012380625681614536}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6136966654407605910
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14610,12 +14621,12 @@ PrefabInstance:
     - target: {fileID: 1176990128951978394, guid: abeb186619cc7e6419cb81e1e4dfa162,
         type: 3}
       propertyPath: moveSpeed
-      value: 1.5
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 1176990128951978394, guid: abeb186619cc7e6419cb81e1e4dfa162,
         type: 3}
       propertyPath: ChaseSpeed
-      value: 1.25
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1176990128951978394, guid: abeb186619cc7e6419cb81e1e4dfa162,
         type: 3}

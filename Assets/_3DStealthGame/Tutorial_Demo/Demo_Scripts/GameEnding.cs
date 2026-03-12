@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using Image = UnityEngine.UI.Image;
 using UnityEngine.Rendering;
+using System.IO.Pipes;
 
 namespace StealthGame
 {
@@ -58,6 +59,8 @@ namespace StealthGame
         private Label Middle;
         private Label KeysLabel;
 
+        private Label timeTaken;
+
         void Start()
         {
             KeyCollected = addedUI.rootVisualElement.Q<Label>("KeyCollected");
@@ -65,6 +68,8 @@ namespace StealthGame
             Middle = addedUI.rootVisualElement.Q<Label>("middle");
             KeysLabel = addedUI.rootVisualElement.Q<Label>("Keys");
             m_Skip = addedUI.rootVisualElement.Q<Label>("Skip");
+            timeTaken = uiDocument.rootVisualElement.Q<Label>("TimeTaken");
+
             HideKeyUI();
             Fade.SetActive(false);
             PlayerStart = player.transform;
@@ -81,7 +86,8 @@ namespace StealthGame
 
             m_Demo_GameTimerLabel = uiDocument.rootVisualElement.Q<Label>("Demo_TimerLabel");
             //KeyUI = uiDocument.rootVisualElement.Q<Label>("KeyNumber");
-            m_Demo_GameTimerLabel.style.opacity = 0;
+            HideTimerUI();
+            //m_Demo_GameTimerLabel.style.opacity = 0;
             m_Demo_GameTimer = 0.0f;
             m_Demo_GameTimerIsTicking = true;
             Demo_UpdateTimerLabel();
@@ -110,6 +116,18 @@ namespace StealthGame
             KeysTotal.style.opacity = 1;
             Middle.style.opacity = 1;
             KeysLabel.style.opacity = 1;
+        }
+
+        void HideTimerUI()
+        {
+            m_Demo_GameTimerLabel.style.opacity = 0;
+            timeTaken.style.opacity = 0;
+        }
+
+        void ShowTimerUI()
+        {
+            m_Demo_GameTimerLabel.style.opacity = 1;
+            timeTaken.style.opacity = 1;
         }
 
         private void Awake()
@@ -178,10 +196,13 @@ namespace StealthGame
             
             m_Timer += Time.deltaTime;
             element.style.opacity = m_Timer / fadeDuration;
-
+            ShowTimerUI();
             if (m_Timer > fadeDuration + displayImageDuration)
             {
-                if (doRestart)
+                Application.Quit();
+                //Time.timeScale = 0;
+
+                /*if (doRestart)
                 {
                     SceneManager.LoadScene("DemoScene");
                 }
@@ -189,7 +210,7 @@ namespace StealthGame
                 {
                     Application.Quit();
                     Time.timeScale = 0;
-                }
+                }*/
             }
         }
 
@@ -214,6 +235,7 @@ namespace StealthGame
 
         public IEnumerator CameraCycle()
         {
+            
             //PlayerMesh.SetActive(true);
             CamSeq = true;
             //SkipUI.SetActive(true);
@@ -349,7 +371,7 @@ namespace StealthGame
             t = 0f;
 
             ResetLevel();
-            playerMovement.EnableMovement();
+            
             m_IsPlayerCaught = false;
             
             while (t < fadeT)
@@ -361,7 +383,7 @@ namespace StealthGame
                 yield return null;
             }
 
-            
+            playerMovement.EnableMovement();
         }
 
     }

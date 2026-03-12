@@ -32,7 +32,7 @@ namespace StealthGame
         public float turnSpeed = 20f;
         public float jumpStrength = 50f;
 
-        Animator m_Animator;
+        public Animator m_Animator;
         Rigidbody m_Rigidbody;
         AudioSource m_AudioSource;
         Vector3 m_Movement;
@@ -40,6 +40,8 @@ namespace StealthGame
 
         public bool IsVisible;
         public bool Chaseable;
+        //public bool isWalking;
+        public bool CanWalk;
 
         public GameEnding gameEnding;
         private Vector3 startPos;
@@ -88,7 +90,7 @@ namespace StealthGame
                 //MoveAction = DefaultControl;
                 // LookAction.Enable();
 
-                //MoveAction.Enable();
+                MoveAction.Enable();
                 //JumpAction.Enable();
                 dir = Direction.Default;
             
@@ -118,37 +120,46 @@ namespace StealthGame
 
         void FixedUpdate ()
         {
-            var pos = MoveAction.ReadValue<Vector2>();
-
-            float horizontal = pos.x;
-            float vertical = pos.y;
-
-            m_Movement.Set(horizontal, 0f, vertical);
-            m_Movement.Normalize();
-
-            bool hasHorizontalInput = !Mathf.Approximately(horizontal, 0f);
-            bool hasVerticalInput = !Mathf.Approximately(vertical, 0f);
-            bool isWalking = hasHorizontalInput || hasVerticalInput;
-            m_Animator.SetBool("IsWalking", isWalking);
-
-            if (isWalking)
+            if (CanWalk == false)
             {
-                if (!m_AudioSource.isPlaying)
+                m_Animator.Play("Idle");
+            }
+
+            if (CanWalk)
+            {
+                var pos = MoveAction.ReadValue<Vector2>();
+
+                float horizontal = pos.x;
+                float vertical = pos.y;
+
+                m_Movement.Set(horizontal, 0f, vertical);
+                m_Movement.Normalize();
+
+                bool hasHorizontalInput = !Mathf.Approximately(horizontal, 0f);
+                bool hasVerticalInput = !Mathf.Approximately(vertical, 0f);
+                bool isWalking = hasHorizontalInput || hasVerticalInput;
+                m_Animator.SetBool("IsWalking", isWalking);
+
+                if (isWalking)
                 {
-                    m_AudioSource.Play();
+                    if (!m_AudioSource.isPlaying)
+                    {
+                        m_AudioSource.Play();
+                    }
                 }
+                else
+                {
+                    m_AudioSource.Stop();
+                }
+
+
+                Vector3 desiredForward = Vector3.RotateTowards(transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
+                m_Rotation = Quaternion.LookRotation(desiredForward);
+
+                m_Rigidbody.MoveRotation(m_Rotation);
+                m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * walkSpeed * Time.deltaTime);
             }
-            else
-            {
-                m_AudioSource.Stop();
-            }
-
-
-            Vector3 desiredForward = Vector3.RotateTowards(transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
-            m_Rotation = Quaternion.LookRotation(desiredForward);
-
-            m_Rigidbody.MoveRotation(m_Rotation);
-            m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * walkSpeed * Time.deltaTime);
+            
 
 
             /*Vector3 forward = cameraTarget.forward;
@@ -298,12 +309,17 @@ namespace StealthGame
 
         public void EnableMovement()
         {
-            MoveAction.Enable();
+            //MoveAction.Enable();
+            CanWalk = true;
+           
+
         }
 
         public void DisableMovement()
         {
-            MoveAction.Disable();
+            //MoveAction.Disable();
+            CanWalk = false;
+
         }
 
         
